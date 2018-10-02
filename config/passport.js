@@ -77,6 +77,7 @@ module.exports = function(passport){
                     return done(err);
                 if(user){
                     console.log('------ Profile from FB -----------',profile);
+                    alert(user);
                     return done(null, user);
                 } else {
                     var newUser = new User();
