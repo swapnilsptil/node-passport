@@ -30,6 +30,7 @@ module.exports = function(app, passport){
 
     app.get('/profile', isLoggedIn, (req, res) => {
         res.render('profile.ejs', {user : req.user} )
+        res.status(200).json({user: user});
     })
 
     app.get('/logout', (req, res) => {
