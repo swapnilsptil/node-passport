@@ -39,17 +39,17 @@ module.exports = function(app, passport){
 
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
-    // app.get('/auth/facebook/callback', passport.authenticate('facebook', { 
-    //     successRedirect: '/profile',
-    //     failureRedirect: '/' 
-    // }));
+    app.get('/auth/facebook/callback', passport.authenticate('facebook', { 
+        successRedirect: '/profile',
+        failureRedirect: '/' 
+    }));
 
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {session : false}), 
-    function(req, res, next){
-        res.status(200).json({
-            message : profile
-        })
-    })
+    // app.get('/auth/facebook/callback', passport.authenticate('facebook', {session : false}), 
+    // function(req, res, next){
+    //     res.status(200).json({
+    //         message : profile
+    //     })
+    // })
 }
 
 function isLoggedIn(req, res, next){
