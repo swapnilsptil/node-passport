@@ -44,9 +44,12 @@ module.exports = function(app, passport){
     //     failureRedirect: '/' 
     // }));
 
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', function(err, user, info){
-        console.log(err, user, info);
-    }))
+    app.get('/auth/facebook/callback', passport.authenticate('facebook', {session : false}), 
+    function(req, res, next){
+        res.status(200).json({
+            message : profile
+        })
+    })
 }
 
 function isLoggedIn(req, res, next){
