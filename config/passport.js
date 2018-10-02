@@ -79,10 +79,11 @@ module.exports = function(passport){
                     return done(null, user);
                 } else {
                     var newUser = new User();
+                    console.log('------ Profile from FB -----------',profile);
                     newUser.facebook.id = profile.id;
                     newUser.facebook.token = accessToken;
-                    newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
-                    newUser.facebook.email = profile.emails;
+                    newUser.facebook.name = profile.name;
+                    newUser.facebook.email = profile.emails[0];
 
                     newUser.save(function(err){
                         if(err)
