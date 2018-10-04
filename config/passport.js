@@ -1,5 +1,7 @@
 var localStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+
 var User = require('../models/user'); 
 var configAuth = require('../config/auth');
 
@@ -86,6 +88,39 @@ module.exports = function(passport){
                     newUser.facebook.token = accessToken;
                     newUser.facebook.name = profile._json.first_name + ' ' + profile._json.last_name;
                     newUser.facebook.email = profile.emails[0].value;
+                    // newUser.facebook.profileUrl = profile.profileUrl;
+                    // newUser.facebook.gender = profile.gender;
+                    // newUser.facebook.displayName = profile.displayName;
+                    
+                    newUser.save(function(err){
+                        if(err)
+                            throw err;
+                        return done(null, newUser);
+                    });
+                }
+            })
+        })
+    }));
+
+    passport.use(new GoogleStrategy({
+        clientID: configAuth.googleAuth.clientID,
+        clientSecret: configAuth.googleAuth.clientSecret,
+        callbackURL: configAuth.googleAuth.callbackURL
+    }, function(accessToken, refreshToken, profile, done) {
+        process.nextTick(function(){
+            User.findOne({'google.id': profile.id}, function(err, user){
+                if(err)
+                    return done(err);
+                if(user){
+                    console.log('------ Profile from Google , User found -----------',profile);
+                    return done(null, user);
+                } else {
+                    var newUser = new User();
+                    console.log('------ Profile from Google , New User -----------',profile);
+                    newUser.google.id = profile.id;
+                    newUser.google.token = accessToken;
+                    newUser.google.name = profile.displayName;
+                    newUser.google.email = profile.emails[0].value;
                     // newUser.facebook.profileUrl = profile.profileUrl;
                     // newUser.facebook.gender = profile.gender;
                     // newUser.facebook.displayName = profile.displayName;
