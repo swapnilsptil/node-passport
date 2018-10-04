@@ -44,7 +44,13 @@ module.exports = function(app, passport){
         successRedirect: '/profile',
         failureRedirect: '/' 
     }));
-
+    // app.get('/auth/facebook/callback', passport.authenticate('facebook', {session : false}), 
+    // function(req, res, next){
+    //     res.status(200).json({
+    //         message : profile
+    //     })
+    // })
+    
     app.get('/auth/google', passport.authenticate('google', { scope: ['profile','email'] }));
 
     app.get('/auth/google/callback', passport.authenticate('google', { 
@@ -52,12 +58,6 @@ module.exports = function(app, passport){
         failureRedirect: '/' 
     }));
 
-    // app.get('/auth/facebook/callback', passport.authenticate('facebook', {session : false}), 
-    // function(req, res, next){
-    //     res.status(200).json({
-    //         message : profile
-    //     })
-    // })
 }
 
 function isLoggedIn(req, res, next){
