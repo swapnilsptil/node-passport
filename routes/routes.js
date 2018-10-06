@@ -58,6 +58,15 @@ module.exports = function(app, passport){
         failureRedirect: '/' 
     }));
 
+    app.get('api/facebook/profile', passport.authenticate('facebook', {scope: ['email']}),
+            (req, res)=> {
+                res.status(200).json({
+                    provider : 'facebook',
+                    data : req
+                })
+            }
+    )
+
 }
 
 function isLoggedIn(req, res, next){
