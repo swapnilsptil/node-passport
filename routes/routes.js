@@ -18,7 +18,7 @@ module.exports = function(app, passport){
         failureFlash : true  
     }))
 
-    app.get('/login', (req, res) => {
+    app.get('/login', (req, res) =>  {
         res.render('login.ejs', {message : req.flash('Normal login Page')});        
     })
 
@@ -62,14 +62,29 @@ module.exports = function(app, passport){
         failureRedirect: '/' 
     }));
 
-    app.get('api/facebook/profile', passport.authenticate('facebook', {scope: ['email']}),
-            (req, res)=> {
-                res.status(200).json({
-                    provider : 'facebook',
-                    data : req
-                })
-            }
-    )
+    app.get('/connet/faceook', passport.autorize('facebook', {scope: ['email']}));
+    app.get('/connet/google', passport.autorize('google', {scope: ['profile','email']}));
+
+    app.get('/connect/local', function(req, res){
+        res.render('connect-local.ejs', {message: req.flash('signUp Message Connect-local')})
+    })
+
+    app.post('/connect/local',passport.authenticate('local-signup',{
+        successRedirect : '/profile',
+        failureRedirect: '/connect/local',
+        failureFlash : true
+    }))
+
+    // app.get('api/facebook/profile', passport.authenticate('facebook', {scope: ['email']}),
+    //         (req, res)=> {
+    //             res.status(200).json({
+    //                 provider : 'facebook',
+    //                 data : req
+    //             })
+    //         }
+    // )
+
+
 
 }
 
