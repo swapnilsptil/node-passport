@@ -62,8 +62,8 @@ module.exports = function(app, passport){
         failureRedirect: '/' 
     }));
 
-    app.get('/connet/faceook', passport.autorize('facebook', {scope: ['email']}));
-    app.get('/connet/google', passport.autorize('google', {scope: ['profile','email']}));
+    app.get('/connet/faceook', passport.authorize('facebook', {scope: ['email']}));
+    app.get('/connet/google', passport.authorize('google', {scope: ['profile','email']}));
 
     app.get('/connect/local', function(req, res){
         res.render('connect-local.ejs', {message: req.flash('signUp Message Connect-local')})
