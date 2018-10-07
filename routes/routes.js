@@ -70,7 +70,7 @@ module.exports = function(app, passport){
     })
 
     app.post('/connect/local',passport.authenticate('local-signup',{
-        successRedirect : '/profile',
+        successRedirect : '/profile',   
         failureRedirect: '/connect/local',
         failureFlash : true
     }))
