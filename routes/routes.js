@@ -62,7 +62,7 @@ module.exports = function(app, passport){
         failureRedirect: '/' 
     }));
 
-    app.get('/connect/faceook', passport.authorize('facebook', {scope: ['email']}));
+    app.get('/connect/facebook', passport.authorize('facebook', {scope: ['email']}));
     app.get('/connect/google', passport.authorize('google', {scope: ['profile','email']}));
 
     app.get('/connect/local', function(req, res){
