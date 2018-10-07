@@ -72,9 +72,9 @@ module.exports = function(passport){
             clientID: configAuth.facebookAuth.clientID,
             clientSecret: configAuth.facebookAuth.clientSecret,
             callbackURL: configAuth.facebookAuth.callbackURL,
-            profileFields: ['id', 'emails', 'name'],
-            passReqToCallback: true
-    }, function(accessToken, refreshToken, profile, done) {
+            passReqToCallback: true,
+            profileFields: ['id', 'emails', 'name']
+    }, function(req, accessToken, refreshToken, profile, done) {
         process.nextTick(function(){
             //  User is not logged
             if(!req.user){
